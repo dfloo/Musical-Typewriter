@@ -35,7 +35,7 @@ Moving forward I would like to add an adjustable volume slider, as well as some 
 
 
 ### HTML5 Canvas
-Canvas is a very powerful 2D drawing API. Similar to working with Web Audio API, drawings in canvas must be done within a *context*. Creating animations is simply a matter of drawing something over and over again. While this could be accomplished using the JavaScript `setInterval()` function, using `requestAnimationFrame()` provides a much smoother and more efficient animation. 
+Canvas is a very powerful 2D drawing API. Similar to working with Web Audio API, drawings in canvas must be done within a *context*. Creating animations is simply a matter of drawing something over and over again. While this could be accomplished using the JavaScript `setInterval()` function, using `requestAnimationFrame()` provides a much smoother and more efficient animation. The code snippet below illustrates how the *Rainbow* animation is drawn.
 
 ```javascript
 drawRainbow() {
@@ -69,8 +69,10 @@ drawRainbow() {
 }
 ```
   
+<img src='images/fire.png' width='250' style='float: left; margin-right: 50px;'/>
 
-In order to create the *Fire* visualization, I utilized a particle system that renders and updates the particles. With each frame, 10 new particles are added, existing particles are updated and any particles that have lived for 50 frames are removed.  The particles start off as semi transparent red circles and turn grey over the course of their lives. In addition to changing color, the particles are also moved up in the y-axis and randomly in the x-axis with each frame. 
+In order to create the *Fire* visualization, I utilized a particle system that renders and updates particles. With each frame, 10 new particles are added, existing particles are updated and any particles that have lived for 50 frames are removed. The particles start off as semi transparent red circles and turn grey over the course of their lives. In addition to changing color, the particles are also moved up in the y-axis and randomly in the x-axis with each frame. 
 
-The key step in making the fire look realistic is to use `globalCompositeOperation` to make overlapping particles lighter, resulting in a white hot center where the highest concentration of particles exists. 
+
+The key to making the fire look realistic is to use `globalCompositeOperation` to make overlapping particles lighter, resulting in a white hot center where the highest concentration of particles exists. 
  

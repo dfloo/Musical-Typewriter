@@ -1090,6 +1090,7 @@ var map = {
 	"./comma.png": "./images/comma.png",
 	"./d.png": "./images/d.png",
 	"./e.png": "./images/e.png",
+	"./fire.png": "./images/fire.png",
 	"./g.png": "./images/g.png",
 	"./h.png": "./images/h.png",
 	"./i.png": "./images/i.png",
@@ -1279,6 +1280,17 @@ module.exports = __webpack_require__.p + "e168e4fce8f09eae9dee47e250a60546.png";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "f22ceb20962bde31a53f01a8efaca7d9.png";
+
+/***/ }),
+
+/***/ "./images/fire.png":
+/*!*************************!*\
+  !*** ./images/fire.png ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "06e076aca15287ff2dd04bdd2ab7f5fa.png";
 
 /***/ }),
 
