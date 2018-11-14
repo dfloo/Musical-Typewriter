@@ -35,7 +35,7 @@ class Canvas extends React.Component {
     let radius = 0;
 
     function draw() {
-      ctx.fillStyle = 'hsl(' + color++ + ', 100%,55%)'
+      ctx.fillStyle = 'hsl(' + color++ + ', 100%, 55%, 0.1)'
       ctx.beginPath();
       ctx.arc(mid[0], mid[1], radius, 0, 2 * Math.PI, false)
       ctx.fill();
@@ -124,9 +124,12 @@ class Canvas extends React.Component {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         
       for (let i = 0; i < particles.length; i++) {
-        ctx.fillStyle = "rgba(" + (260 - (particles[i].life * 2)) + "," + ((particles[i].life * 2) + 50) + "," + (particles[i].life * 2) + "," + (((max - particles[i].life) / max) * 0.4) + ")";
+        ctx.fillStyle = "rgba(" + (260 - (particles[i].life * 2)) + "," + 
+          ((particles[i].life * 2) + 50) + "," + (particles[i].life * 2) + 
+          "," + (((max - particles[i].life) / max) * 0.4) + ")";
         ctx.beginPath();
-        ctx.arc(particles[i].x, particles[i].y, (max-particles[i].life)/max*(size/2)+(size/2), 0, 2*Math.PI);
+        ctx.arc(particles[i].x, particles[i].y, 
+          (max-particles[i].life)/max*(size/2)+(size/2), 0, 2*Math.PI);
         ctx.fill();
         particles[i].x += particles[i].dx;
         particles[i].y += particles[i].dy;

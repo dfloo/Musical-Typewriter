@@ -1,62 +1,76 @@
 # Musical Typewriter - An Audio/Visual Experience
 
-## Background and Overview
-Musical Typewriter is a music app that allows users to play music with cool visualizations simply by typing on their keyboards. 
+## Overview
+Musical Typewriter is a pure front-end JavaScript project that allows users to play music with visualizations using their keyboards.
 
-Users will be able to select from a number of different sound and visualization settings. 
-
-## Functionality & MVP
-In Musical Typewriter, users will be able to:
-- [ ] make music by typing on their keyboards
-- [ ] key icons will be sent flying accross the screen and behave according to the selected visualization preference. 
-- [ ] select from a list of color schemes and physics behaviors 
-- [ ] select from a list of instruments to play (i.e. piano, synth, guitar)
+Users can adjust the sound by selecting the waveform used by the synthesizer and choose from three different visualizations settings to accompany the music.
 
 
-## Wireframes 
-The App will consist of a single screen with a visualization canvas and a sidebar. 
+## Technology
 
-## Architecture and Technologies 
-This project will be implemented with the following technologies:
-- Vanilla JavaScript for overall structure and logic,
-- HTML5 Canvas for DOM manipulation and rendering, 
-- Web Audio API for sound generation, processing and control. 
-- Webpack to bundle and serve up the various scripts. 
+### Web Audio API
+The first step in working with Web Audio API is to create an *audio context* in which to perform the basic audio operations. Then each operation is performed with nodes that are chained together and ultimately connected to the destination. For this project I used an oscillator which takes in a frequency, and a waveform to generate the sound. 
 
-In addition to the webpack entry file, there will be two main scripts involved in the project: 
 
-`keys.js`: this script will handle the physics logic for the visualization of the flying keys. 
+```javascript
+playSound(key) {
+  const freq = getFreq(key);
+  if (freq) {
+    this.playFreq(freq);
+  }
+  this.handleAnimation(key)
+}
 
-`audio.js`: this script will handle the audio logic.
+playFreq(freq) {
+  let note = new Sound(this.ctx, this.state.wave);
+  let now = this.ctx.currentTime;
+  if (this.state.vol === 'on') {
+    note.play(freq, now);
+    note.stop(now + 1);
+  }
+}
+```
 
-## Implementation Timeline 
+Moving forward I would like to add an adjustable volume slider, as well as some filters & effects to further customize the sound.
 
-**Day 1**: 
-- [ ] Complete WebAudioAPI Tutorial and load basic sound from static assets
-- [ ] Build sound library. 
 
-**Day 2**: 
-- [ ] Able to play sounds by pressing keys. 
-- [ ] Get webpack serving files and frame out index.html
+### HTML5 Canvas
+Canvas is a very powerful 2D drawing API. Similar to working with Web Audio API, drawings in canvas must be done within a *context*. Creating animations is simply a matter of drawing something over and over again. While this could be accomplished using the JavaScript `setInterval()` function, using `requestAnimationFrame()` provides a much smoother and more efficient animation. 
 
-**Day 3**: 
-- [ ] Render flying keys on canvas each time key is pressed. 
-- [ ] Implement default physics behavior (bouncing)
+```javascript
+drawRainbow() {
+  const ctx = this.refs.canvas.getContext("2d");
+  ctx.canvas.width = window.innerWidth * 0.7;
+  ctx.canvas.height = window.innerHeight * 0.4;
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  
+  const mid = [
+    ctx.canvas.width / 2, 
+    ctx.canvas.height
+  ];
+  
+  let radius = 0;
+  let color = 0
 
-**Day 4**: 
-- [ ] Add additional physics behaviors (exploding, shrinking, )
-- [ ] Add color pallettes for flying keys (fire, water, earth, raindow)
+  function draw() {
+    ctx.fillStyle = 'hsl(' + color++ + ', 100%,55%)'
+    ctx.beginPath();
+    ctx.arc(mid[0], mid[1], radius, 0, 2 * Math.PI, false)
+    ctx.fill();
+    radius += 2;
+    if (radius <= ctx.canvas.width * 0.68) {
+      requestAnimationFrame(draw);
+    } else {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    }
+  }
 
-**Day 5**: 
-- [ ] Add controls to sidebar to select audio & visual settings
-- [ ] Add styling to canvas & sidebar components
+  draw();
+}
+```
+  
 
-**Over the Weekend**: 
-- [ ] Ensure smooth bug free experience
-- [ ] Add links to github, linkedin, etc. 
+In order to create the *Fire* visualization, I utilized a particle system that renders and updates the particles. With each frame, 10 new particles are added, existing particles are updated and any particles that have lived for 50 frames are removed.  The particles start off as semi transparent red circles and turn grey over the course of their lives. In addition to changing color, the particles are also moved up in the y-axis and randomly in the x-axis with each frame. 
 
-## Bonus Features 
-
-- [ ] Add additional controls for generating sounds with different wave forms, filters, etc.
-- [ ] Add more visualization physics 
-- [ ] Add challenge to play specific songs by promting the user to hit the correct key on time. 
+The key step in making the fire look realistic is to use `globalCompositeOperation` to make overlapping particles lighter, resulting in a white hot center where the highest concentration of particles exists. 
+ 

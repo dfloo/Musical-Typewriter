@@ -164,7 +164,7 @@ function (_React$Component) {
       var radius = 0;
 
       function draw() {
-        ctx.fillStyle = 'hsl(' + color++ + ', 100%,55%)';
+        ctx.fillStyle = 'hsl(' + color++ + ', 100%, 55%, 0.1)';
         ctx.beginPath();
         ctx.arc(mid[0], mid[1], radius, 0, 2 * Math.PI, false);
         ctx.fill();
