@@ -1,5 +1,7 @@
 # Musical Typewriter - An Audio/Visual Experience
 
+[Live Demo](https://dfloo.github.io)
+
 ## Overview
 Musical Typewriter is a pure front-end JavaScript project that allows users to play music with visualizations using their keyboards.
 
